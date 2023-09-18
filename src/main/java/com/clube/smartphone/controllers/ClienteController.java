@@ -32,7 +32,7 @@ public class ClienteController {
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<?> salvar(@RequestBody Cliente cliente, BindingResult result) {
+    public ResponseEntity<Cliente> salvar(@RequestBody Cliente cliente, BindingResult result) {
         serviceEndereco.save(cliente.getEndereco());
         serviceAparelho.save(cliente.getAparelho());
         return ResponseEntity.status(HttpStatus.CREATED).body(serviceCliente.save(cliente));

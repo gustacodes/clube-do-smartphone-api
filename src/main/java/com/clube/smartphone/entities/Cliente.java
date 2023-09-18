@@ -17,10 +17,10 @@ public class Cliente {
     private String nome;
     @NotBlank(message = "Insira o contato do cliente")
     private String telefone;
-    @NotEmpty(message = "Insira o endereço")
+    @NotNull(message = "nao nulo")
     @ManyToOne
     private Endereco endereco;
-    @NotEmpty(message = "Insira os dados do aparelho")
+    @NotNull(message = "nao nulo")
     @ManyToOne
     private Aparelho aparelho;
 
