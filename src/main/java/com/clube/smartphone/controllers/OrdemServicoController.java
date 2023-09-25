@@ -39,7 +39,7 @@ public class OrdemServicoController {
 
         List<Cliente> clientes = clienteService.listarTodos();
 
-        for(Cliente cliente: clientes) {
+        for (Cliente cliente : clientes) {
             long id = cliente.getId();
             cliente.add(linkTo(methodOn(ClienteController.class).buscarPorId(id)).withSelfRel());
         }
