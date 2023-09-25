@@ -22,4 +22,9 @@ public class ClienteService {
     public List<Cliente> listarTodos() {
         return respository.findAll();
     }
+
+    public Cliente buscarPorId(Long id) {
+        var cliente = respository.findById(id).orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+        return cliente;
+    }
 }

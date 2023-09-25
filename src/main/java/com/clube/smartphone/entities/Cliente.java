@@ -5,10 +5,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.springframework.hateoas.RepresentationModel;
 
 @Entity
 @Data
-public class Cliente {
+public class Cliente extends RepresentationModel<Cliente> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,11 +18,8 @@ public class Cliente {
     private String nome;
     @NotBlank(message = "Insira o contato do cliente")
     private String telefone;
-    @NotNull(message = "nao nulo")
+    @NotNull(message = "Preencha o endereço")
     @ManyToOne
     private Endereco endereco;
-    @NotNull(message = "nao nulo")
-    @ManyToOne
-    private Aparelho aparelho;
 
 }

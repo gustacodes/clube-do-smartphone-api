@@ -9,6 +9,7 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -21,10 +22,14 @@ public class OrdemServico {
     @ManyToOne
     private Cliente cliente;
     @NotBlank(message = "Insira o problema do aparelho")
+    @Lob
     private String problemaRelatado;
     @NotNull
     private LocalDateTime data;
     @NotBlank
     private Status status;
+    @NotNull(message = "Preencha os dados do aparelho")
+    @OneToMany
+    private List<Aparelho> aparelho;
 
 }
