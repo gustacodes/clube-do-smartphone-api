@@ -1,6 +1,7 @@
 package com.clube.smartphone.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -18,6 +19,9 @@ public class Cliente extends RepresentationModel<Cliente> {
     private String nome;
     @NotBlank(message = "Insira o contato do cliente")
     private String telefone;
+    @NotNull(message = "Insira o e-mail")
+    @Email(message = "Formato de e-mail inválido")
+    private String email;
     @NotNull(message = "Preencha o endereço")
     @ManyToOne
     private Endereco endereco;

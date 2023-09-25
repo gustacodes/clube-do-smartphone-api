@@ -15,7 +15,8 @@ public class ClienteService {
         this.respository = respository;
     }
 
-    public Cliente save(Cliente cliente) {
+    public Cliente salvar(Cliente cliente) {
+        validaCliente(cliente);
         return respository.save(cliente);
     }
 
@@ -27,4 +28,14 @@ public class ClienteService {
         var cliente = respository.findById(id).orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
         return cliente;
     }
+
+    public void validaCliente(Cliente cliente) {
+
+        if (respository.existsByEmail(cliente.getEmail())) {
+            throw new RuntimeException("E-mail já cadastrado no sistema");
+        } else if (respository.existsByTelefone(cliente.getTelefone())) {
+            throw new RuntimeException("Telefone já cadastrado no sistema");
+        }
+    }
+
 }

@@ -1,12 +1,10 @@
 package com.clube.smartphone.controllers;
 
 import com.clube.smartphone.entities.Cliente;
-import com.clube.smartphone.repositories.EnderecoRepository;
 import com.clube.smartphone.services.AparelhoService;
 import com.clube.smartphone.services.ClienteService;
 import com.clube.smartphone.services.EnderecoSerivce;
 import jakarta.validation.Valid;
-import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -40,7 +38,7 @@ public class ClienteController {
 
         List<Cliente> cliente = serviceCliente.listarTodos();
 
-        for(Cliente c : cliente) {
+        for (Cliente c : cliente) {
             long id = c.getId();
             c.add(linkTo(methodOn(ClienteController.class).buscarPorId(id)).withSelfRel());
         }
@@ -78,7 +76,7 @@ public class ClienteController {
             response.put("message", "Cliente cadastrado com sucesso");
 
             serviceEndereco.save(cliente.getEndereco());
-            serviceCliente.save(cliente);
+            serviceCliente.salvar(cliente);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
 
