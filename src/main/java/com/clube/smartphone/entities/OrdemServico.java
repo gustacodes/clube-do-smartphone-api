@@ -6,6 +6,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.hateoas.RepresentationModel;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -18,15 +21,14 @@ public class OrdemServico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotEmpty(message = "Preencha todos os dados do cliente")
+    @NotNull(message = "Preencha todos os dados do cliente")
     @ManyToOne
     private Cliente cliente;
-    @NotBlank(message = "Insira o problema do aparelho")
-    @Lob
+    @NotNull(message = "Insira o problema do aparelho")
     private String problemaRelatado;
     @NotNull
-    private LocalDateTime data;
-    @NotBlank
+    private String data;
+    @NotNull
     private Status status;
     @NotNull(message = "Preencha os dados do aparelho")
     @OneToMany

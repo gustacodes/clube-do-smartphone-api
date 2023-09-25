@@ -3,6 +3,7 @@ package com.clube.smartphone.enums;
 public enum Status {
 
     ANALISE,
-    CONCLUIDO
+    CONCLUIDO,
+    FINALIZADO
 
 }

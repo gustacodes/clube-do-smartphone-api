@@ -4,6 +4,8 @@ import com.clube.smartphone.entities.Aparelho;
 import com.clube.smartphone.repositories.AparelhoRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AparelhoService {
 
@@ -13,7 +15,7 @@ public class AparelhoService {
         this.repository = repository;
     }
 
-    public void save(Aparelho aparelho) {
-        repository.save(aparelho);
+    public List<Aparelho> salvar(List<Aparelho> aparelho) {
+        return repository.saveAll(aparelho);
     }
 }
