@@ -20,6 +20,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/clientes")
 public class ClienteController {
 
@@ -33,7 +34,7 @@ public class ClienteController {
         this.serviceAparelho = aparelhoService;
     }
 
-    @GetMapping("/listar")
+    @GetMapping
     public ResponseEntity<List<Cliente>> listar() {
 
         List<Cliente> cliente = serviceCliente.listarTodos();
@@ -53,7 +54,7 @@ public class ClienteController {
         return ResponseEntity.ok(cliente);
     }
 
-    @PostMapping("/cadastrar")
+    @PostMapping
     public ResponseEntity<Object> salvar(@RequestBody @Valid Cliente cliente, BindingResult result) {
 
         if (result.hasErrors()) {

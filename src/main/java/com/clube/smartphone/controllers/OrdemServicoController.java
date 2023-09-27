@@ -21,6 +21,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/ordens")
 public class OrdemServicoController {
 
@@ -34,7 +35,7 @@ public class OrdemServicoController {
         this.ordemServicoService = ordemServicoService;
     }
 
-    @GetMapping("/listar")
+    @GetMapping
     public ResponseEntity<List<OrdemServico>> listar() {
 
         List<Cliente> clientes = clienteService.listarTodos();
@@ -47,7 +48,7 @@ public class OrdemServicoController {
         return ResponseEntity.ok(ordemServicoService.listar());
     }
 
-    @PostMapping("/criar")
+    @PostMapping
     public ResponseEntity<Object> criar(@RequestBody @Valid OrdemServico ordem, BindingResult result) {
         ordem.setCliente(clienteService.buscarPorId(2L));
 
