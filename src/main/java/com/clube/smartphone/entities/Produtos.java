@@ -19,13 +19,12 @@ public class Produtos extends RepresentationModel<Produtos> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull(message = "Informe a marca")
-    private String marca;
+    private String fabricante;
     @NotNull(message = "Informe o modelo")
     private String modelo;
     @NotNull(message = "Insira a cor do produto")
     private String cor;
     @NotNull(message = "Defina uma quantidade")
-    @Size(min = 1)
     private long quantidade;
 
 }
