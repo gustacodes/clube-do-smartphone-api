@@ -6,6 +6,7 @@ import com.clube.smartphone.services.AparelhoService;
 import com.clube.smartphone.services.ClienteService;
 import com.clube.smartphone.services.OrdemServicoService;
 import jakarta.validation.Valid;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -50,7 +51,7 @@ public class OrdemServicoController {
 
     @PostMapping
     public ResponseEntity<Object> criar(@RequestBody @Valid OrdemServico ordem, BindingResult result) {
-        ordem.setCliente(clienteService.buscarPorId(2L));
+        ordem.setCliente(clienteService.buscarPorId(1L));
 
         if (result.hasErrors() && ordem.getCliente() == null) {
 
@@ -73,4 +74,11 @@ public class OrdemServicoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(ordemServicoService.salvar(ordem));
 
     }
+
+    @GetMapping("/cliente/{cpf}")
+    public ResponseEntity<List<OrdemServico>> ordemServico(@PathVariable String cpf) {
+        List<OrdemServico> ordens = ordemServicoService.ordemCliente(cpf);
+        return ResponseEntity.ok().body(ordens);
+    }
+
 }

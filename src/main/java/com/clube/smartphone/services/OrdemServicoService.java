@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -37,4 +38,18 @@ public class OrdemServicoService {
         ordem.setStatus(Status.ANALISE);
         return ordemServicoRepository.save(ordem);
     }
+
+    public List<OrdemServico> ordemCliente(String cpf) {
+        List<OrdemServico> ordens = ordemServicoRepository.findAll();
+        List<OrdemServico> ord = new ArrayList<>();
+
+        for (OrdemServico ordem : ordens) {
+            if (ordem.getCliente().getCpf().equalsIgnoreCase(cpf)) {
+                ord.add(ordem);
+            }
+        }
+
+        return ord;
+    }
+
 }
