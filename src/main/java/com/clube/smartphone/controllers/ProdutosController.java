@@ -9,10 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -71,8 +68,28 @@ public class ProdutosController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Produtos> buscarPorId(@PathVariable Long id) {
+
         Produtos produto = service.buscarPorId(id);
         produto.add(linkTo(methodOn(ProdutosController.class).listar()).withRel("Lista de produtos"));
         return ResponseEntity.ok().body(produto);
+
     }
+
+    @GetMapping("/modelo/{modelo}")
+    public ResponseEntity<List<Produtos>> buscarPorModelo(@PathVariable String modelo) {
+
+        List<Produtos> produtos = service.listar();
+        List<Produtos> produto = new ArrayList<>();
+
+        for (Produtos p : produtos) {
+            if (p.getModelo().equalsIgnoreCase(modelo)) {
+                long id = p.getId();
+                p.add(linkTo(methodOn(ProdutosController.class).buscarPorId(id)).withSelfRel());
+                produto.add(p);
+            }
+        }
+
+        return ResponseEntity.ok().body(produto);
+    }
+
 }
