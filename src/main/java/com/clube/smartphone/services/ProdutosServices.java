@@ -1,10 +1,15 @@
 package com.clube.smartphone.services;
 
+import com.clube.smartphone.controllers.ProdutosController;
 import com.clube.smartphone.entities.Produtos;
 import com.clube.smartphone.repositories.ProdutosRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class ProdutosServices {
@@ -29,12 +34,17 @@ public class ProdutosServices {
     }
 
     public List<Produtos> buscarPorModelo(String modelo) {
-        List<Produtos> produto = repository.modelo(modelo);
+        List<Produtos> produtos = repository.findAll();
+        List<Produtos> produto = new ArrayList<>();
+
+        for (Produtos p : produtos) {
+            if (p.getModelo().equalsIgnoreCase(modelo)) {
+                long id = p.getId();
+                p.add(linkTo(methodOn(ProdutosController.class).buscarPorId(id)).withSelfRel());
+                produto.add(p);
+            }
+        }
         return produto;
     }
 
-//    public List<Produtos> buscarPorMarca(String marca) {
-//        List<Produtos> produto = repository.marca(marca);
-//        return produto;
-//    }
 }
