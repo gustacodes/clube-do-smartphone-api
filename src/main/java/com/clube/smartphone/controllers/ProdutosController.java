@@ -78,18 +78,9 @@ public class ProdutosController {
     @GetMapping("/modelo/{modelo}")
     public ResponseEntity<List<Produtos>> buscarPorModelo(@PathVariable String modelo) {
 
-        List<Produtos> produtos = service.listar();
-        List<Produtos> produto = new ArrayList<>();
-
-        for (Produtos p : produtos) {
-            if (p.getModelo().equalsIgnoreCase(modelo)) {
-                long id = p.getId();
-                p.add(linkTo(methodOn(ProdutosController.class).buscarPorId(id)).withSelfRel());
-                produto.add(p);
-            }
-        }
-
+        List<Produtos> produto = service.buscarPorModelo(modelo);
         return ResponseEntity.ok().body(produto);
+        
     }
 
 }
