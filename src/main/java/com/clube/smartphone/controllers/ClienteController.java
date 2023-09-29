@@ -1,26 +1,24 @@
 package com.clube.smartphone.controllers;
 
 import com.clube.smartphone.entities.Cliente;
+import com.clube.smartphone.repositories.ClienteRespository;
 import com.clube.smartphone.services.AparelhoService;
 import com.clube.smartphone.services.ClienteService;
 import com.clube.smartphone.services.EnderecoSerivce;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/clientes")
 public class ClienteController {
 

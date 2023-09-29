@@ -4,9 +4,7 @@ import com.clube.smartphone.entities.Produtos;
 import com.clube.smartphone.repositories.ProdutosRepository;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProdutosServices {
@@ -29,4 +27,14 @@ public class ProdutosServices {
         Produtos produto = repository.findById(id).orElseThrow(() -> new RuntimeException("Produto não encontrado."));
         return produto;
     }
+
+    public List<Produtos> buscarPorModelo(String modelo) {
+        List<Produtos> produto = repository.modelo(modelo);
+        return produto;
+    }
+
+//    public List<Produtos> buscarPorMarca(String marca) {
+//        List<Produtos> produto = repository.marca(marca);
+//        return produto;
+//    }
 }

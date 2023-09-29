@@ -19,6 +19,8 @@ public class Cliente extends RepresentationModel<Cliente> {
     private String nome;
     @NotBlank(message = "Insira o contato do cliente")
     private String telefone;
+    @NotNull
+    private String cpf;
     @NotNull(message = "Insira o e-mail")
     @Email(message = "Formato de e-mail inválido")
     private String email;
