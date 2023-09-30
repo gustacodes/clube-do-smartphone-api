@@ -24,6 +24,8 @@ public class OrdemServico {
     @NotNull(message = "Preencha todos os dados do cliente")
     @ManyToOne
     private Cliente cliente;
+    @NotNull
+    private String cpf;
     @NotNull(message = "Insira o problema do aparelho")
     private String problemaRelatado;
     @NotNull

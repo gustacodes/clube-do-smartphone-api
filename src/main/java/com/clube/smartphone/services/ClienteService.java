@@ -38,4 +38,8 @@ public class ClienteService {
         }
     }
 
+    public Cliente cpf(String cpf) {
+        return respository.cpf(cpf);
+    }
+
 }

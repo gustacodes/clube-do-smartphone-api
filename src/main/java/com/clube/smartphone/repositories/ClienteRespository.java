@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface ClienteRespository extends JpaRepository<Cliente, Long> {
     boolean existsByEmail(String email);
     boolean existsByTelefone(String telefone);
+    Cliente cpf(String cpf);
 }

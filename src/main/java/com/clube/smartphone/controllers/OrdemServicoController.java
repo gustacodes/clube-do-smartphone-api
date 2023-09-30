@@ -2,6 +2,7 @@ package com.clube.smartphone.controllers;
 
 import com.clube.smartphone.entities.Cliente;
 import com.clube.smartphone.entities.OrdemServico;
+import com.clube.smartphone.enums.Status;
 import com.clube.smartphone.services.AparelhoService;
 import com.clube.smartphone.services.ClienteService;
 import com.clube.smartphone.services.OrdemServicoService;
@@ -22,7 +23,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/ordens")
 public class OrdemServicoController {
 
@@ -51,9 +51,11 @@ public class OrdemServicoController {
 
     @PostMapping
     public ResponseEntity<Object> criar(@RequestBody @Valid OrdemServico ordem, BindingResult result) {
-        ordem.setCliente(clienteService.buscarPorId(1L));
 
-        if (result.hasErrors() && ordem.getCliente() == null) {
+        Cliente cliente = clienteService.cpf(ordem.getCpf());
+        ordem.setCliente(cliente);
+
+        if (result.hasErrors() && cliente == null) {
 
             List<String> errors = new ArrayList<>();
 
@@ -70,6 +72,7 @@ public class OrdemServicoController {
         }
 
         aparelhoService.salvar(ordem.getAparelho());
+        ordem.setStatus(Status.ANALISE);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(ordemServicoService.salvar(ordem));
 

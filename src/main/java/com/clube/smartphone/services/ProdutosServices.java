@@ -44,6 +44,17 @@ public class ProdutosServices {
                 produto.add(p);
             }
         }
+
+        return produto;
+    }
+
+    public Produtos compra(String modelo, Integer quantidade) {
+
+        Produtos produto = repository.findBymodelo(modelo);
+        long venda = produto.getQuantidade() - quantidade;
+        produto.setQuantidade(venda);
+        repository.save(produto);
+
         return produto;
     }
 

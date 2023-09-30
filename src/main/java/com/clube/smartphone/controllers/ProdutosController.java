@@ -80,7 +80,15 @@ public class ProdutosController {
 
         List<Produtos> produto = service.buscarPorModelo(modelo);
         return ResponseEntity.ok().body(produto);
-        
+
+    }
+
+    @PutMapping("/comprar/{modelo}/{quantidade}")
+    public ResponseEntity<Produtos> compra(@PathVariable String modelo, @PathVariable Integer quantidade) {
+
+        Produtos produto = service.compra(modelo, quantidade);
+        return ResponseEntity.ok().body(produto);
+
     }
 
 }
