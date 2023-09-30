@@ -1,6 +1,5 @@
 package com.clube.smartphone.repositories;
 
-import com.clube.smartphone.entities.Cliente;
 import com.clube.smartphone.entities.OrdemServico;
 import org.springframework.data.jpa.repository.JpaRepository;
 
