@@ -80,7 +80,7 @@ public class ProdutosController {
 
         List<Produtos> produto = service.buscarPorModelo(modelo);
         return ResponseEntity.ok().body(produto);
-        
+
     }
 
 }

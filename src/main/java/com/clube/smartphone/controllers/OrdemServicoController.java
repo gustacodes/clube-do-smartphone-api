@@ -22,7 +22,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/ordens")
 public class OrdemServicoController {
 
@@ -51,7 +50,7 @@ public class OrdemServicoController {
 
     @PostMapping
     public ResponseEntity<Object> criar(@RequestBody @Valid OrdemServico ordem, BindingResult result) {
-        ordem.setCliente(clienteService.buscarPorId(1L));
+        ordem.setCliente(ordem.getCliente());
 
         if (result.hasErrors() && ordem.getCliente() == null) {
 
