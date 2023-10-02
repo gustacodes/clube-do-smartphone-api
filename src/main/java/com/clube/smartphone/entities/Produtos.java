@@ -5,11 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.springframework.hateoas.RepresentationModel;
-
-import java.util.List;
 
 @Entity
 @Data
