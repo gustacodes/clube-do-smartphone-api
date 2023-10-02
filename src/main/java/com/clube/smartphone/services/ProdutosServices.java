@@ -1,10 +1,13 @@
 package com.clube.smartphone.services;
 
 import com.clube.smartphone.controllers.ProdutosController;
+import com.clube.smartphone.entities.Financeiro;
 import com.clube.smartphone.entities.Produtos;
+import com.clube.smartphone.repositories.FinanceiroRepository;
 import com.clube.smartphone.repositories.ProdutosRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +18,11 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class ProdutosServices {
 
     private ProdutosRepository repository;
+    private FinanceiroService financeiroRepository;
 
-    public ProdutosServices(ProdutosRepository repository) {
+    public ProdutosServices(ProdutosRepository repository, FinanceiroService financeiroRepository) {
         this.repository = repository;
+        this.financeiroRepository = financeiroRepository;
     }
 
     public Produtos salvar(Produtos produtos) {
@@ -48,11 +53,14 @@ public class ProdutosServices {
         return produto;
     }
 
-    public Produtos compra(String modelo, Integer quantidade) {
+    public Produtos compra(String modelo, Integer quantidade, Financeiro financeiro) {
 
         Produtos produto = repository.findBymodelo(modelo);
-        long venda = produto.getQuantidade() - quantidade;
-        produto.setQuantidade(venda);
+        long qtd = produto.getQuantidade() - quantidade;
+        produto.setQuantidade(qtd);
+
+        var venda = new Financeiro(produto.getPreco(), LocalDateTime.now().toString(), produto.getModelo());
+        financeiroRepository.salvar(venda);
         repository.save(produto);
 
         return produto;

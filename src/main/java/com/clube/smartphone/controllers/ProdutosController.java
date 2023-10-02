@@ -94,10 +94,7 @@ public class ProdutosController {
     @PutMapping("/comprar/{modelo}/{quantidade}")
     public ResponseEntity<Produtos> compra(@PathVariable String modelo, @PathVariable Integer quantidade) {
 
-        Produtos produto = service.compra(modelo, quantidade);
-        var venda = new Financeiro(produto.getPreco(), LocalDateTime.now().toString(), produto.getModelo());
-        financeiroService.salvar(venda);
-
+        Produtos produto = service.compra(modelo, quantidade, new Financeiro());
         return ResponseEntity.ok().body(produto);
 
     }
