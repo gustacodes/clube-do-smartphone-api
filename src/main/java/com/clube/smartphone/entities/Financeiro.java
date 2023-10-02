@@ -25,6 +25,7 @@ public class Financeiro {
     public Financeiro() {
 
     }
+    
 
     public Financeiro(Double valor, String dataDaVenda, String produto) {
         this.valor = valor;
