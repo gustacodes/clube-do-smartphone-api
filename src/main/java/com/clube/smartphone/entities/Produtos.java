@@ -26,5 +26,7 @@ public class Produtos extends RepresentationModel<Produtos> {
     private String cor;
     @NotNull(message = "Defina uma quantidade")
     private long quantidade;
+    @NotNull(message = "Insira o valor do produto")
+    private  double preco;
 
 }
