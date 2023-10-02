@@ -1,6 +1,8 @@
 package com.clube.smartphone.controllers;
 
+import com.clube.smartphone.entities.Financeiro;
 import com.clube.smartphone.entities.Produtos;
+import com.clube.smartphone.services.FinanceiroService;
 import com.clube.smartphone.services.ProdutosServices;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -9,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,14 +21,15 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/produtos")
 public class ProdutosController {
 
     private ProdutosServices service;
+    private FinanceiroService financeiroService ;
 
-    public ProdutosController(ProdutosServices service) {
+    public ProdutosController(ProdutosServices service, FinanceiroService financeiroService) {
         this.service = service;
+        this.financeiroService = financeiroService;
     }
 
     @GetMapping
@@ -91,6 +95,9 @@ public class ProdutosController {
     public ResponseEntity<Produtos> compra(@PathVariable String modelo, @PathVariable Integer quantidade) {
 
         Produtos produto = service.compra(modelo, quantidade);
+        var venda = new Financeiro(produto.getPreco(), LocalDateTime.now().toString(), produto.getModelo());
+        financeiroService.salvar(venda);
+
         return ResponseEntity.ok().body(produto);
 
     }

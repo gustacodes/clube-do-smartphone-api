@@ -1,10 +1,13 @@
 package com.clube.smartphone.entities;
 
+import com.clube.smartphone.services.FinanceiroService;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -15,7 +18,18 @@ public class Financeiro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Double venda;
-    private LocalDateTime dataDaVenda;
+    private String produto;
+    private Double valor;
+    private String dataDaVenda;
 
+    public Financeiro() {
+
+    }
+    
+
+    public Financeiro(Double valor, String dataDaVenda, String produto) {
+        this.valor = valor;
+        this.dataDaVenda = dataDaVenda;
+        this.produto = produto;
+    }
 }
