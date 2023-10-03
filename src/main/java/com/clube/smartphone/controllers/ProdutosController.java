@@ -1,5 +1,6 @@
 package com.clube.smartphone.controllers;
 
+import com.clube.smartphone.entities.Compra;
 import com.clube.smartphone.entities.Financeiro;
 import com.clube.smartphone.entities.Produtos;
 import com.clube.smartphone.services.FinanceiroService;
@@ -11,7 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -87,17 +87,6 @@ public class ProdutosController {
     public ResponseEntity<List<Produtos>> buscarPorModelo(@PathVariable String modelo) {
 
         List<Produtos> produto = service.buscarPorModelo(modelo);
-        return ResponseEntity.ok().body(produto);
-
-    }
-
-    @PutMapping("/comprar/{modelo}/{quantidade}")
-    public ResponseEntity<Produtos> compra(@PathVariable String modelo, @PathVariable Integer quantidade) {
-
-        Produtos produto = service.compra(modelo, quantidade);
-        var venda = new Financeiro(produto.getPreco(), LocalDateTime.now().toString(), produto.getModelo());
-        financeiroService.salvar(venda);
-
         return ResponseEntity.ok().body(produto);
 
     }

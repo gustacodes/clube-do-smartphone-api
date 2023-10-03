@@ -18,18 +18,15 @@ public class Financeiro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String produto;
     private Double valor;
     private String dataDaVenda;
 
     public Financeiro() {
 
     }
-    
 
-    public Financeiro(Double valor, String dataDaVenda, String produto) {
+    public Financeiro(Double valor, String dataDaVenda) {
         this.valor = valor;
         this.dataDaVenda = dataDaVenda;
-        this.produto = produto;
     }
 }
