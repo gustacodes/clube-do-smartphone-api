@@ -26,4 +26,15 @@ public class Produtos extends RepresentationModel<Produtos> {
     @NotNull(message = "Insira o valor do produto")
     private  double preco;
 
+    public Produtos() {
+
+    }
+
+    public Produtos(String fabricante, String modelo, String cor, long quantidade, double preco) {
+        this.fabricante = fabricante;
+        this.modelo = modelo;
+        this.cor = cor;
+        this.quantidade = quantidade;
+        this.preco = preco;
+    }
 }

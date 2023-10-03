@@ -1,8 +1,10 @@
 package com.clube.smartphone.services;
 
 import com.clube.smartphone.controllers.ProdutosController;
+import com.clube.smartphone.entities.Compra;
 import com.clube.smartphone.entities.Financeiro;
 import com.clube.smartphone.entities.Produtos;
+import com.clube.smartphone.enums.Pagamento;
 import com.clube.smartphone.repositories.FinanceiroRepository;
 import com.clube.smartphone.repositories.ProdutosRepository;
 import org.springframework.stereotype.Service;
@@ -49,19 +51,6 @@ public class ProdutosServices {
                 produto.add(p);
             }
         }
-
-        return produto;
-    }
-
-    public Produtos compra(String modelo, Integer quantidade, Financeiro financeiro) {
-
-        Produtos produto = repository.findBymodelo(modelo);
-        long qtd = produto.getQuantidade() - quantidade;
-        produto.setQuantidade(qtd);
-
-        var venda = new Financeiro(produto.getPreco(), LocalDateTime.now().toString(), produto.getModelo());
-        financeiroRepository.salvar(venda);
-        repository.save(produto);
 
         return produto;
     }
