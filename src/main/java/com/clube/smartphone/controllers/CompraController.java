@@ -31,6 +31,7 @@ public class CompraController {
         });
 
         return ResponseEntity.ok().body(compraService.listar());
+
     }
 
     @GetMapping("/{id}")

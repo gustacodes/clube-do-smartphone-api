@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -59,10 +60,10 @@ public class ClienteController {
     public ResponseEntity<Object> salvar(@RequestBody @Valid ClienteDTO cliente, BindingResult result) {
 
         if (result.hasErrors()) {
-            List<String> errors = new ArrayList<>();
-            for (FieldError error : result.getFieldErrors()) {
-                errors.add(error.getDefaultMessage());
-            }
+            List<String> errors = result.getFieldErrors()
+                    .stream()
+                    .map(FieldError::getDefaultMessage)
+                    .collect(Collectors.toList());
 
             Map<String, Object> response = new HashMap<>();
             response.put("success", false);
@@ -70,19 +71,17 @@ public class ClienteController {
             response.put("errors", errors);
 
             return ResponseEntity.badRequest().body(response);
-
-        } else {
-
-            Map<String, Object> response = new HashMap<>();
-            response.put("success", true);
-            response.put("message", "Cliente cadastrado com sucesso");
-
-            serviceEndereco.save(cliente.getEndereco());
-            serviceCliente.salvar(cliente);
-
-            return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
-
         }
+
+        serviceEndereco.save(cliente.getEndereco());
+        serviceCliente.salvar(cliente);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("message", "Cliente cadastrado com sucesso");
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+
 
     }
 

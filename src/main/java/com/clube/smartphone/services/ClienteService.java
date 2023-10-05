@@ -19,11 +19,13 @@ public class ClienteService {
     }
 
     public Cliente salvar(ClienteDTO cliente) {
+
         validaCliente(cliente);
-        var client = new Cliente();
-        BeanUtils.copyProperties(cliente, client);
-        System.out.println(client);
-        return respository.save(client);
+        var clienteEntity = new Cliente();
+        BeanUtils.copyProperties(cliente, clienteEntity);
+        System.out.println(clienteEntity);
+
+        return respository.save(clienteEntity);
     }
 
     public List<ClienteDTO> listar() {
