@@ -15,7 +15,7 @@ public class CompraController {
 
     private CompraService compraService;
 
-    public CompraController(ProdutosServices produtosServices, CompraService compraService) {
+    public CompraController(CompraService compraService) {
         this.compraService = compraService;
     }
 

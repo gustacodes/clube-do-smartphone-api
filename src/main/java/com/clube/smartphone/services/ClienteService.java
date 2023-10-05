@@ -1,10 +1,13 @@
 package com.clube.smartphone.services;
 
 import com.clube.smartphone.entities.Cliente;
+import com.clube.smartphone.entities.dtos.ClienteDTO;
 import com.clube.smartphone.repositories.ClienteRespository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ClienteService {
@@ -15,21 +18,28 @@ public class ClienteService {
         this.respository = respository;
     }
 
-    public Cliente salvar(Cliente cliente) {
+    public Cliente salvar(ClienteDTO cliente) {
         validaCliente(cliente);
-        return respository.save(cliente);
+        var client = new Cliente();
+        BeanUtils.copyProperties(cliente, client);
+        System.out.println(client);
+        return respository.save(client);
     }
 
-    public List<Cliente> listarTodos() {
-        return respository.findAll();
+    public List<ClienteDTO> listar() {
+        return respository.findAll().stream().map(ClienteDTO::new).collect(Collectors.toList());
     }
 
-    public Cliente buscarPorId(Long id) {
-        var cliente = respository.findById(id).orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+    public ClienteDTO buscarPorId(Long id) {
+        var cliente = respository.findById(id).map(ClienteDTO::new).get();
         return cliente;
     }
 
-    public void validaCliente(Cliente cliente) {
+    public void remover(Long id) {
+        respository.deleteById(id);
+    }
+
+    public void validaCliente(ClienteDTO cliente) {
 
         if (respository.existsByEmail(cliente.getEmail())) {
             throw new RuntimeException("E-mail já cadastrado no sistema");

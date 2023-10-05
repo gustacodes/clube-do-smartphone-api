@@ -1,18 +1,21 @@
-package com.clube.smartphone.entities;
+package com.clube.smartphone.entities.dtos;
 
-import jakarta.persistence.*;
+import com.clube.smartphone.entities.Cliente;
+import com.clube.smartphone.entities.Endereco;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.hateoas.RepresentationModel;
 
-@Entity
 @Data
-public class Cliente extends RepresentationModel<Cliente> {
+@NoArgsConstructor
+public class ClienteDTO extends RepresentationModel<ClienteDTO> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,15 +33,13 @@ public class Cliente extends RepresentationModel<Cliente> {
     @ManyToOne
     private Endereco endereco;
 
-    public Cliente() {
-
+    public ClienteDTO(Cliente cliente) {
+        this.id = cliente.getId();
+        this.nome = cliente.getNome();
+        this.telefone = cliente.getTelefone();
+        this.cpf = cliente.getCpf();
+        this.email = cliente.getEmail();
+        this.endereco = cliente.getEndereco();
     }
 
-    public Cliente(Long id, String nome, String telefone, String cpf, String email) {
-        this.id = id;
-        this.nome = nome;
-        this.telefone = telefone;
-        this.cpf = cpf;
-        this.email = email;
-    }
 }

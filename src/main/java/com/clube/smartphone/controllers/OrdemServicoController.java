@@ -2,12 +2,12 @@ package com.clube.smartphone.controllers;
 
 import com.clube.smartphone.entities.Cliente;
 import com.clube.smartphone.entities.OrdemServico;
+import com.clube.smartphone.entities.dtos.ClienteDTO;
 import com.clube.smartphone.enums.Status;
 import com.clube.smartphone.services.AparelhoService;
 import com.clube.smartphone.services.ClienteService;
 import com.clube.smartphone.services.OrdemServicoService;
 import jakarta.validation.Valid;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -39,9 +39,9 @@ public class OrdemServicoController {
     @GetMapping
     public ResponseEntity<List<OrdemServico>> listar() {
 
-        List<Cliente> clientes = clienteService.listarTodos();
+        List<ClienteDTO> clientes = clienteService.listar();
 
-        for (Cliente cliente : clientes) {
+        for (ClienteDTO cliente : clientes) {
             long id = cliente.getId();
             cliente.add(linkTo(methodOn(ClienteController.class).buscarPorId(id)).withSelfRel());
         }
