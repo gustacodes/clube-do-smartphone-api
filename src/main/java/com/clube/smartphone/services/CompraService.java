@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CompraService {
@@ -30,6 +31,11 @@ public class CompraService {
 
     public List<Compra> listar() {
         return compraRepository.findAll();
+    }
+
+    public Compra buscarPorId(Long id) {
+        Compra compra = compraRepository.findById(id).orElseThrow(() -> new RuntimeException("Compra inexistente"));
+        return compra;
     }
 
     public Compra compra(Long id, Double quantidade, Pagamento pagamento) {

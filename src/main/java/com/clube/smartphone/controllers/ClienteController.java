@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -39,10 +40,9 @@ public class ClienteController {
 
         List<ClienteDTO> cliente = serviceCliente.listar();
 
-        for (ClienteDTO client : cliente) {
-            long id = client.getId();
-            client.add(linkTo(methodOn(ClienteController.class).buscarPorId(id)).withSelfRel());
-        }
+        cliente.forEach(clienteDTO -> {
+            clienteDTO.add(linkTo(methodOn(ClienteController.class).buscarPorId(clienteDTO.getId())).withSelfRel());
+        });
 
         return ResponseEntity.ok().body(cliente);
 

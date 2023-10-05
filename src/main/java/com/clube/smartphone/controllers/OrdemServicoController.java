@@ -41,10 +41,11 @@ public class OrdemServicoController {
 
         List<ClienteDTO> clientes = clienteService.listar();
 
-        for (ClienteDTO cliente : clientes) {
-            long id = cliente.getId();
-            cliente.add(linkTo(methodOn(ClienteController.class).buscarPorId(id)).withSelfRel());
-        }
+        clientes.forEach(cliente -> { cliente
+                .add(linkTo(methodOn(ClienteController.class)
+                .buscarPorId(cliente.getId()))
+                .withSelfRel());
+        } );
 
         return ResponseEntity.ok(ordemServicoService.listar());
     }
