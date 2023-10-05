@@ -16,6 +16,7 @@ public class FinanceiroService {
     public FinanceiroService(FinanceiroRepository repository) {
         this.repository = repository;
     }
+
     public Financeiro salvar(Financeiro financeiro) {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");

@@ -32,14 +32,17 @@ public class CompraService {
         return compraRepository.findAll();
     }
 
-    public Compra compra(Long id, Integer quantidade, Pagamento pagamento) {
+    public Compra compra(Long id, Double quantidade, Pagamento pagamento) {
 
         Produtos produto = produtosRepository.findById(id).get();
-        long atualizaQuantidade = produto.getQuantidade() - quantidade;
+        Double atualizaQuantidade = produto.getQuantidade() - quantidade;
         produto.setQuantidade(atualizaQuantidade);
         produtosRepository.save(produto);
+        Double valorDoProduto = 0.0;
 
-        var venda = new Financeiro(produto.getPreco(), LocalDateTime.now().toString());
+        valorDoProduto = quantidade * produto.getPreco();
+
+        var venda = new Financeiro(valorDoProduto, LocalDateTime.now().toString());
         financeiroRepository.salvar(venda);
 
         var compra = new Compra(produto);

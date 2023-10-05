@@ -22,7 +22,7 @@ public class Produtos extends RepresentationModel<Produtos> {
     @NotNull(message = "Insira a cor do produto")
     private String cor;
     @NotNull(message = "Defina uma quantidade")
-    private long quantidade;
+    private Double quantidade;
     @NotNull(message = "Insira o valor do produto")
     private  double preco;
 
@@ -30,7 +30,7 @@ public class Produtos extends RepresentationModel<Produtos> {
 
     }
 
-    public Produtos(String fabricante, String modelo, String cor, long quantidade, double preco) {
+    public Produtos(String fabricante, String modelo, String cor, Double quantidade, double preco) {
         this.fabricante = fabricante;
         this.modelo = modelo;
         this.cor = cor;
