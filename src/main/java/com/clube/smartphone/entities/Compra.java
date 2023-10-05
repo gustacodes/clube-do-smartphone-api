@@ -4,10 +4,11 @@ import com.clube.smartphone.enums.Pagamento;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.springframework.hateoas.RepresentationModel;
 
 @Entity
 @Data
-public class Compra {
+public class Compra extends RepresentationModel<Compra> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 @RestController
 @RequestMapping("/comprar")
 public class CompraController {
@@ -20,7 +23,19 @@ public class CompraController {
 
     @GetMapping
     public ResponseEntity<List<Compra>> listar() {
+
+        List<Compra> compras = compraService.listar();
+
+        compras.forEach(compra -> {
+            compra.add(linkTo(methodOn(CompraController.class).buscarPorId(compra.getId())).withSelfRel());
+        });
+
         return ResponseEntity.ok().body(compraService.listar());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Compra> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok().body(compraService.buscarPorId(id));
     }
 
     @PutMapping("/{id}/{quantidade}/{pagamento}")

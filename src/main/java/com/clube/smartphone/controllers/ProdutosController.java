@@ -37,10 +37,11 @@ public class ProdutosController {
 
         List<Produtos> produtos = service.listar();
 
-        for (Produtos produto : produtos) {
-            long id = produto.getId();
-            produto.add(linkTo(methodOn(ProdutosController.class).buscarPorId(id)).withSelfRel());
-        }
+        produtos.forEach(produto -> {
+            produto.add(linkTo(methodOn(ProdutosController.class)
+                    .buscarPorId(produto.getId())).withSelfRel());
+        });
+
         return ResponseEntity.ok().body(service.listar());
     }
 
