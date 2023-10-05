@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -25,7 +26,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class ProdutosController {
 
     private ProdutosServices service;
-    private FinanceiroService financeiroService ;
+    private FinanceiroService financeiroService;
 
     public ProdutosController(ProdutosServices service, FinanceiroService financeiroService) {
         this.service = service;
@@ -50,11 +51,10 @@ public class ProdutosController {
 
         if (result.hasErrors()) {
 
-            List<String> errors = new ArrayList<>();
-
-            for (FieldError error : result.getFieldErrors()) {
-                errors.add(error.getDefaultMessage());
-            }
+            List<String> errors = result.getFieldErrors()
+                    .stream()
+                    .map(FieldError::getDefaultMessage)
+                    .collect(Collectors.toList());
 
             Map<String, Object> response = new HashMap<>();
             response.put("success", false);
@@ -63,16 +63,16 @@ public class ProdutosController {
 
             return ResponseEntity.badRequest().body(response);
 
-        } else {
-
-            Map<String, Object> response = new HashMap<>();
-            response.put("success", true);
-            response.put("message", "Produto cadastrado com sucesso");
-
-            produto.add(linkTo(methodOn(ProdutosController.class).listar()).withRel("Todos produtos"));
-            return ResponseEntity.status(HttpStatus.CREATED).body(service.salvar(produto));
-
         }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("message", "Produto cadastrado com sucesso");
+
+        produto.add(linkTo(methodOn(ProdutosController.class).listar()).withRel("Todos produtos"));
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.salvar(produto));
+
     }
 
     @GetMapping("/{id}")
